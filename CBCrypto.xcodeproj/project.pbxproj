@@ -14,6 +14,8 @@
 		5108613C2290126C0060C12F /* EncryptionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510861392290126C0060C12F /* EncryptionError.swift */; };
 		5108613F229013850060C12F /* PBKDF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5108613E229013850060C12F /* PBKDF2.swift */; };
 		89ED0BEC899F18B56F65D3D4 /* libPods-CBCryptoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8A70E3B81CB712A75BDCDB /* libPods-CBCryptoTests.a */; };
+		D3C6A77E22A6E4FF00E1ABFB /* String+CBCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C6A77D22A6E4FF00E1ABFB /* String+CBCrypto.swift */; };
+		D3C6A78022A6E64600E1ABFB /* Data+CBCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C6A77F22A6E64600E1ABFB /* Data+CBCrypto.swift */; };
 		DA12A541956B7202B54C3804 /* libPods-CBCrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BB760A0911693602EB43BA /* libPods-CBCrypto.a */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +42,8 @@
 		510861352290126C0060C12F /* AES256GCM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES256GCM.swift; sourceTree = "<group>"; };
 		510861392290126C0060C12F /* EncryptionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptionError.swift; sourceTree = "<group>"; };
 		5108613E229013850060C12F /* PBKDF2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBKDF2.swift; sourceTree = "<group>"; };
+		D3C6A77D22A6E4FF00E1ABFB /* String+CBCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+CBCrypto.swift"; sourceTree = "<group>"; };
+		D3C6A77F22A6E64600E1ABFB /* Data+CBCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+CBCrypto.swift"; sourceTree = "<group>"; };
 		F8BB760A0911693602EB43BA /* libPods-CBCrypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CBCrypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD9F786FC31ACE30A6B926E /* Pods-CBCrypto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CBCrypto.release.xcconfig"; path = "Target Support Files/Pods-CBCrypto/Pods-CBCrypto.release.xcconfig"; sourceTree = "<group>"; };
 		FEFAAD6CC268E02A87B7B95C /* Pods-CBCrypto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CBCrypto.debug.xcconfig"; path = "Target Support Files/Pods-CBCrypto/Pods-CBCrypto.debug.xcconfig"; sourceTree = "<group>"; };
@@ -89,6 +93,7 @@
 		5108611B229011FE0060C12F /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				D3C6A77C22A6E4E200E1ABFB /* Extensions */,
 				5108613D229013780060C12F /* KeyDerivationFunctions */,
 				510861342290126C0060C12F /* Ciphers */,
 				510861382290126C0060C12F /* Errors */,
@@ -148,6 +153,15 @@
 				27B6E57144B4A5C773048714 /* Pods-CBCryptoTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D3C6A77C22A6E4E200E1ABFB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D3C6A77D22A6E4FF00E1ABFB /* String+CBCrypto.swift */,
+				D3C6A77F22A6E64600E1ABFB /* Data+CBCrypto.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E1A2ECF6FB73ACCA0ABA1895 /* Frameworks */ = {
@@ -316,6 +330,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3C6A78022A6E64600E1ABFB /* Data+CBCrypto.swift in Sources */,
+				D3C6A77E22A6E4FF00E1ABFB /* String+CBCrypto.swift in Sources */,
 				5108613F229013850060C12F /* PBKDF2.swift in Sources */,
 				5108613A2290126C0060C12F /* AES256GCM.swift in Sources */,
 				5108613C2290126C0060C12F /* EncryptionError.swift in Sources */,
