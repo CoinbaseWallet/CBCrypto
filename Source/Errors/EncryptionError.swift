@@ -8,4 +8,10 @@ enum EncryptionError: Error {
 
     /// Error thrown when supplied with invalid AES-256 GCM parameters
     case invalidAES256GCMData
+
+    /// Error thrown when encryption fails
+    case unableToEncryptData
+
+    /// Error thrown when decryption fails
+    case unableToDecryptData
 }
