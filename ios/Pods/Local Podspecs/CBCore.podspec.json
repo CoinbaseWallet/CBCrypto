@@ -1,0 +1,32 @@
+{
+  "name": "CBCore",
+  "version": "0.1.0",
+  "summary": "Shared code for all Wallet modules",
+  "description": "Shared code for all Wallet modules. Developed by Coinbase Wallet team.",
+  "homepage": "https://github.com/CoinbaseWallet/CBCore",
+  "license": {
+    "type": "AGPL-3.0-only",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Coinbase": "developer@toshi.org"
+  },
+  "source": {
+    "git": "https://github.com/CoinbaseWallet/CBCore.git",
+    "tag": "0.1.0"
+  },
+  "social_media_url": "https://twitter.com/coinbase",
+  "platforms": {
+    "ios": "11.0"
+  },
+  "swift_version": "4.2",
+  "source_files": "ios/Source/**/*",
+  "dependencies": {
+    "RxSwift": [
+      "~> 4.4.0"
+    ],
+    "BigInt": [
+      "~> 3.1.0"
+    ]
+  }
+}

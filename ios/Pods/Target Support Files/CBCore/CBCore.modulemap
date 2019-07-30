@@ -1,0 +1,6 @@
+module CBCore {
+  umbrella header "CBCore-umbrella.h"
+
+  export *
+  module * { export * }
+}

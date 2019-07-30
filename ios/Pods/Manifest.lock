@@ -1,0 +1,53 @@
+PODS:
+  - BigInt (3.1.0):
+    - SipHash (~> 1.2)
+  - CBCore (0.1.0):
+    - BigInt (~> 3.1.0)
+    - RxSwift (~> 4.4.0)
+  - CryptoSwift (1.0.0)
+  - RxAtomic (4.4.2)
+  - RxSwift (4.4.2):
+    - RxAtomic (>= 4.4.2, ~> 4.4)
+  - SipHash (1.2.2)
+  - SwiftFormat/CLI (0.37.2)
+  - SwiftLint (0.33.0)
+
+DEPENDENCIES:
+  - "CBCore (from `git@github.com:CoinbaseWallet/CBCore.git`, commit `ee30448572da06ad1b060956b782360ea829b425`)"
+  - CryptoSwift
+  - SwiftFormat/CLI (= 0.37.2)
+  - SwiftLint
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - BigInt
+    - CryptoSwift
+    - RxAtomic
+    - RxSwift
+    - SipHash
+    - SwiftFormat
+    - SwiftLint
+
+EXTERNAL SOURCES:
+  CBCore:
+    :commit: ee30448572da06ad1b060956b782360ea829b425
+    :git: "git@github.com:CoinbaseWallet/CBCore.git"
+
+CHECKOUT OPTIONS:
+  CBCore:
+    :commit: ee30448572da06ad1b060956b782360ea829b425
+    :git: "git@github.com:CoinbaseWallet/CBCore.git"
+
+SPEC CHECKSUMS:
+  BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
+  CBCore: 5cc5dd6899d10dad8de63e483927bfe63bcc53c0
+  CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
+  RxAtomic: d00e97c10db88c6f08540e0bf2752fc5a2404167
+  RxSwift: 74c29b693c8e42b0f64400e8b06564575742d649
+  SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
+  SwiftFormat: abbfb26dde4c6d683923cde153c88e10da9d7881
+  SwiftLint: fed9c66336e41fc74dc48a73678380718f0c8b0e
+
+PODFILE CHECKSUM: 66cd61ca9b95503eaa633579cfadd3d6747b3821
+
+COCOAPODS: 1.6.2

@@ -1,0 +1,13 @@
+platform :ios, '11.0'
+
+target 'CBCrypto' do
+  pod 'CryptoSwift'
+  pod 'CBCore', git: 'git@github.com:CoinbaseWallet/CBCore.git', commit: "ee30448572da06ad1b060956b782360ea829b425"
+  pod 'SwiftLint'
+  pod 'SwiftFormat/CLI', '0.37.2'
+
+  target 'CBCryptoTests' do
+    inherit! :search_paths
+  end
+
+end

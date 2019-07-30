@@ -1,6 +1,0 @@
-module Pods_CBCrypto {
-  umbrella header "Pods-CBCrypto-umbrella.h"
-
-  export *
-  module * { export * }
-}
