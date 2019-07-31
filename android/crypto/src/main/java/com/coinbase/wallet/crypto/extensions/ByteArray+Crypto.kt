@@ -1,6 +1,5 @@
 package com.coinbase.wallet.crypto.extensions
 
-
 /**
  * Convert ByteArray to hex encoded string
  */
