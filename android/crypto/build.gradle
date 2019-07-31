@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply from: '../gradle/dependencies.gradle'
+
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "29.0.0"
+
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+}
+
+configurations {
+    ktlint
+}
+
+
+dependencies {
+    ktlint "com.pinterest:ktlint:${otherVersions.ktlint}"
+
+
+    implementation(
+            // kotlin
+            "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
+    )
+
+    testImplementation(
+            "junit:junit:${testVersions.junit4}"
+
+    )
+
+    androidTestImplementation(
+            "androidx.test.ext:junit:${testVersions.androidXTestExtJUnit}",
+            "androidx.test:runner:${testVersions.androidXTestRunner}",
+            "androidx.test:core:${testVersions.androidXTestCore}"
+    )
+}
+
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    main = "com.pinterest.ktlint.Main"
+    classpath = configurations.ktlint
+    args "src/**/*.kt"
+}
+
+check.dependsOn ktlint
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    main = "com.pinterest.ktlint.Main"
+    classpath = configurations.ktlint
+    args "-F", "src/**/*.kt"
+}
