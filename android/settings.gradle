@@ -1,1 +1,3 @@
-include ':crypto'
+include ':crypto', ':libraries:core'
+
+project(':libraries:core').projectDir = new File('libraries/core/android/core')

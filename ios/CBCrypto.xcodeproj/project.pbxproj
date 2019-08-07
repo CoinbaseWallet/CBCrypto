@@ -93,7 +93,6 @@
 		5108611B229011FE0060C12F /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				5168B8BF22F0014A00EBBAD5 /* New Group */,
 				D3C6A77C22A6E4E200E1ABFB /* Extensions */,
 				5108613D229013780060C12F /* KeyDerivationFunctions */,
 				510861342290126C0060C12F /* Ciphers */,
@@ -143,13 +142,6 @@
 				5108613E229013850060C12F /* PBKDF2.swift */,
 			);
 			path = KeyDerivationFunctions;
-			sourceTree = "<group>";
-		};
-		5168B8BF22F0014A00EBBAD5 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		7ADB9E6D5CDBF178366E5F2E /* Pods */ = {
