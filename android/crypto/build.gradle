@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply from: '../gradle/dependencies.gradle'
 
@@ -6,47 +7,39 @@ apply from: '../gradle/dependencies.gradle'
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
-    
+
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
-
 }
 
 configurations {
     ktlint
 }
 
-
 dependencies {
     ktlint "com.pinterest:ktlint:${otherVersions.ktlint}"
 
-
     implementation(
-            // kotlin
-            "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
+        // kotlin
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
 
-            project(':libraries:core')
+        project(':libraries:core')
     )
 
     testImplementation(
-            "junit:junit:${testVersions.junit4}"
-
+        "junit:junit:${testVersions.junit4}"
     )
 
     androidTestImplementation(
-            "androidx.test.ext:junit:${testVersions.androidXTestExtJUnit}",
-            "androidx.test:runner:${testVersions.androidXTestRunner}",
-            "androidx.test:core:${testVersions.androidXTestCore}"
+        "androidx.test.ext:junit:${testVersions.androidXTestExtJUnit}",
+        "androidx.test:runner:${testVersions.androidXTestRunner}",
+        "androidx.test:core:${testVersions.androidXTestCore}"
     )
 }
-
 
 task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
@@ -62,4 +55,8 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
     main = "com.pinterest.ktlint.Main"
     classpath = configurations.ktlint
     args "-F", "src/**/*.kt"
+}
+
+repositories {
+    mavenCentral()
 }
