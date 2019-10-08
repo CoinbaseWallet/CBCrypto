@@ -22,18 +22,24 @@ class AES256GCM {
          *
          * @return A pair of encrypted data and authTag
          */
-        @Synchronized fun encrypt(data: ByteArray, key: ByteArray, iv: ByteArray): Pair<ByteArray, ByteArray> {
-            val cipher = Cipher.getInstance(TRANSFORMATION)
-            val paramSpec = GCMParameterSpec(AUTH_TAG_SIZE, iv)
-            val keySpec = SecretKeySpec(key, "AES")
+         fun encrypt(data: ByteArray, key: ByteArray, iv: ByteArray): Pair<ByteArray, ByteArray> {
+            CryptoLock.lock()
+            try {
+                val cipher = Cipher.getInstance(TRANSFORMATION)
+                val paramSpec = GCMParameterSpec(AUTH_TAG_SIZE, iv)
+                val keySpec = SecretKeySpec(key, "AES")
 
-            cipher.init(Cipher.ENCRYPT_MODE, keySpec, paramSpec)
-            val cipherBytes = cipher.doFinal(data)
-            val ciphertextEndIndex = cipherBytes.size - (AUTH_TAG_SIZE / Byte.SIZE_BITS)
-            val encryptedBytes = cipherBytes.copyOfRange(0, ciphertextEndIndex)
-            val authTagBytes = cipherBytes.copyOfRange(ciphertextEndIndex, cipherBytes.size)
+                cipher.init(Cipher.ENCRYPT_MODE, keySpec, paramSpec)
+                val cipherBytes = cipher.doFinal(data)
+                val ciphertextEndIndex = cipherBytes.size - (AUTH_TAG_SIZE / Byte.SIZE_BITS)
+                val encryptedBytes = cipherBytes.copyOfRange(0, ciphertextEndIndex)
+                val authTagBytes = cipherBytes.copyOfRange(ciphertextEndIndex, cipherBytes.size)
 
-            return Pair(encryptedBytes, authTagBytes)
+                return Pair(encryptedBytes, authTagBytes)
+            } finally {
+                CryptoLock.unlock()
+            }
+
         }
 
         /**
@@ -45,16 +51,21 @@ class AES256GCM {
          * @return A triple of iv, authTag, and encrypted data
          * @throws `EncryptionException.invalidAES256GCMData` if unable to encrypt data
          */
-        @Synchronized fun encrypt(data: ByteArray, secretKey: SecretKey): Triple<ByteArray, ByteArray, ByteArray> {
-            val cipher = Cipher.getInstance(TRANSFORMATION)
+         fun encrypt(data: ByteArray, secretKey: SecretKey): Triple<ByteArray, ByteArray, ByteArray> {
+            CryptoLock.lock()
+            try {
+                val cipher = Cipher.getInstance(TRANSFORMATION)
 
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-            val cipherBytes = cipher.doFinal(data)
-            val cipherEndIndex = cipherBytes.size - (AUTH_TAG_SIZE / Byte.SIZE_BITS)
-            val encryptedBytes = cipherBytes.copyOfRange(0, cipherEndIndex)
-            val authTagBytes = cipherBytes.copyOfRange(cipherEndIndex, cipherBytes.size)
+                cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+                val cipherBytes = cipher.doFinal(data)
+                val cipherEndIndex = cipherBytes.size - (AUTH_TAG_SIZE / Byte.SIZE_BITS)
+                val encryptedBytes = cipherBytes.copyOfRange(0, cipherEndIndex)
+                val authTagBytes = cipherBytes.copyOfRange(cipherEndIndex, cipherBytes.size)
 
-            return Triple(cipher.iv, authTagBytes, encryptedBytes)
+                return Triple(cipher.iv, authTagBytes, encryptedBytes)
+            } finally {
+                CryptoLock.unlock()
+            }
         }
 
         /**
@@ -68,15 +79,20 @@ class AES256GCM {
          * @return The decrypted data
          * @throws`EncryptionError.invalidAES256GCMData` if unable to decrypt data
          */
-        @Synchronized fun decrypt(data: ByteArray, key: ByteArray, iv: ByteArray, authTag: ByteArray): ByteArray {
-            val cipher = Cipher.getInstance(TRANSFORMATION)
-            val paramSpec = GCMParameterSpec(AUTH_TAG_SIZE, iv)
-            val keySpec = SecretKeySpec(key, "AES")
-            val encryptedData = data + authTag
+         fun decrypt(data: ByteArray, key: ByteArray, iv: ByteArray, authTag: ByteArray): ByteArray {
+            CryptoLock.lock()
+            try {
+                val cipher = Cipher.getInstance(TRANSFORMATION)
+                val paramSpec = GCMParameterSpec(AUTH_TAG_SIZE, iv)
+                val keySpec = SecretKeySpec(key, "AES")
+                val encryptedData = data + authTag
 
-            cipher.init(Cipher.DECRYPT_MODE, keySpec, paramSpec)
+                cipher.init(Cipher.DECRYPT_MODE, keySpec, paramSpec)
 
-            return cipher.doFinal(encryptedData)
+                return cipher.doFinal(encryptedData)
+            } finally {
+                CryptoLock.unlock()
+            }
         }
 
         /**
@@ -89,14 +105,18 @@ class AES256GCM {
          *
          * @return A triple of iv, authTag, and encrypted data
          */
-        @Synchronized fun decrypt(data: ByteArray, secretKey: SecretKey, iv: ByteArray, authTag: ByteArray): ByteArray {
-            val cipher = Cipher.getInstance(TRANSFORMATION)
-            val paramSpec = GCMParameterSpec(AUTH_TAG_SIZE, iv)
-            val encryptedData = data + authTag
+         fun decrypt(data: ByteArray, secretKey: SecretKey, iv: ByteArray, authTag: ByteArray): ByteArray {
+            CryptoLock.lock()
+            try {
+                val cipher = Cipher.getInstance(TRANSFORMATION)
+                val paramSpec = GCMParameterSpec(AUTH_TAG_SIZE, iv)
+                val encryptedData = data + authTag
 
-            cipher.init(Cipher.DECRYPT_MODE, secretKey, paramSpec)
-
-            return cipher.doFinal(encryptedData)
+                cipher.init(Cipher.DECRYPT_MODE, secretKey, paramSpec)
+                return cipher.doFinal(encryptedData)
+            } finally {
+                CryptoLock.unlock()
+            }
         }
     }
 }
