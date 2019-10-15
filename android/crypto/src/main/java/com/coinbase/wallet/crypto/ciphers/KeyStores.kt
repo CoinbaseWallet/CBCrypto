@@ -17,19 +17,16 @@ object KeyStores {
      * Get a key spec for gcm block mode without requiring user authentication
      *
      * @param alias the alias of the key
+     * @param isAuthenticated whether user authentication is required to access the key. If it is, a randomized iv
+     * should be used.
      * @return a key spec for gcm block mode without user authentication
      */
-    fun getGCMKeySpec(alias: String): KeyGenParameterSpec = getKeyGenParameterSpecBuilder(alias).build()
-
-    /**
-     * Get a key spec for gcm block mode and require user authentication.
-     *
-     * @param alias the alias of the key
-     * @return a key spec for gcm block mode with user authentication
-     */
-    fun getGCMWithUserAuthenticationKeySpec(alias: String): KeyGenParameterSpec = getKeyGenParameterSpecBuilder(alias)
-        .setUserAuthenticationRequired(true)
-        .setRandomizedEncryptionRequired(true)
+    fun buildGCMKeySpec(alias: String, isAuthenticated: Boolean): KeyGenParameterSpec = KeyGenParameterSpec
+        .Builder(alias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+        .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+        .setUserAuthenticationRequired(isAuthenticated)
+        .setRandomizedEncryptionRequired(isAuthenticated)
         .build()
 
     /**
@@ -48,9 +45,8 @@ object KeyStores {
         CertificateException::class,
         UnrecoverableEntryException::class
     )
-    fun getAESWithGCMSecretKey(keystore: String, alias: String, isAuthenticated: Boolean = false): SecretKey {
-        val spec = if (isAuthenticated) getGCMWithUserAuthenticationKeySpec(alias) else getGCMKeySpec(alias)
-        return getAESSecretKey(keystore, spec)
+    fun getOrCreateAES256GCMSecretKey(keystore: String, alias: String, isAuthenticated: Boolean = false): SecretKey {
+        return getOrCreateAESSecretKey(keystore, buildGCMKeySpec(alias, isAuthenticated))
     }
 
     /**
@@ -68,7 +64,7 @@ object KeyStores {
         CertificateException::class,
         UnrecoverableEntryException::class
     )
-    fun getAESSecretKey(keystore: String, spec: KeyGenParameterSpec): SecretKey = CipherLock.withLock {
+    fun getOrCreateAESSecretKey(keystore: String, spec: KeyGenParameterSpec): SecretKey = CipherLock.withLock {
         // Attempt to fetch existing stored secret key from Android KeyStore
         val keyStore = KeyStore.getInstance(keystore)
         keyStore.load(null)
@@ -108,10 +104,4 @@ object KeyStores {
         keyStore.load(null)
         if (keyStore.containsAlias(alias)) keyStore.deleteEntry(alias)
     }
-
-    private fun getKeyGenParameterSpecBuilder(alias: String): KeyGenParameterSpec.Builder = KeyGenParameterSpec
-        .Builder(alias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
-        .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-        .setRandomizedEncryptionRequired(false)
 }
