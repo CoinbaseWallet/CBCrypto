@@ -4,6 +4,7 @@ import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.SecretKeySpec
+import kotlin.concurrent.withLock
 
 /**
  * Utility used to encrypt/decrypt using AES-256 GCM
@@ -22,7 +23,7 @@ class AES256GCM {
          *
          * @return A pair of encrypted data and authTag
          */
-        @Synchronized fun encrypt(data: ByteArray, key: ByteArray, iv: ByteArray): Pair<ByteArray, ByteArray> {
+        fun encrypt(data: ByteArray, key: ByteArray, iv: ByteArray): Pair<ByteArray, ByteArray> = CipherLock.withLock {
             val cipher = Cipher.getInstance(TRANSFORMATION)
             val paramSpec = GCMParameterSpec(AUTH_TAG_SIZE, iv)
             val keySpec = SecretKeySpec(key, "AES")
@@ -45,7 +46,10 @@ class AES256GCM {
          * @return A triple of iv, authTag, and encrypted data
          * @throws `EncryptionException.invalidAES256GCMData` if unable to encrypt data
          */
-        @Synchronized fun encrypt(data: ByteArray, secretKey: SecretKey): Triple<ByteArray, ByteArray, ByteArray> {
+        fun encrypt(
+            data: ByteArray,
+            secretKey: SecretKey
+        ): Triple<ByteArray, ByteArray, ByteArray> = CipherLock.withLock {
             val cipher = Cipher.getInstance(TRANSFORMATION)
 
             cipher.init(Cipher.ENCRYPT_MODE, secretKey)
@@ -68,7 +72,12 @@ class AES256GCM {
          * @return The decrypted data
          * @throws`EncryptionError.invalidAES256GCMData` if unable to decrypt data
          */
-        @Synchronized fun decrypt(data: ByteArray, key: ByteArray, iv: ByteArray, authTag: ByteArray): ByteArray {
+        fun decrypt(
+            data: ByteArray,
+            key: ByteArray,
+            iv: ByteArray,
+            authTag: ByteArray
+        ): ByteArray = CipherLock.withLock {
             val cipher = Cipher.getInstance(TRANSFORMATION)
             val paramSpec = GCMParameterSpec(AUTH_TAG_SIZE, iv)
             val keySpec = SecretKeySpec(key, "AES")
@@ -89,13 +98,17 @@ class AES256GCM {
          *
          * @return A triple of iv, authTag, and encrypted data
          */
-        @Synchronized fun decrypt(data: ByteArray, secretKey: SecretKey, iv: ByteArray, authTag: ByteArray): ByteArray {
+        fun decrypt(
+            data: ByteArray,
+            secretKey: SecretKey,
+            iv: ByteArray,
+            authTag: ByteArray
+        ): ByteArray = CipherLock.withLock {
             val cipher = Cipher.getInstance(TRANSFORMATION)
             val paramSpec = GCMParameterSpec(AUTH_TAG_SIZE, iv)
             val encryptedData = data + authTag
 
             cipher.init(Cipher.DECRYPT_MODE, secretKey, paramSpec)
-
             return cipher.doFinal(encryptedData)
         }
     }
