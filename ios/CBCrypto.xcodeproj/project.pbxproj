@@ -237,6 +237,7 @@
 				TargetAttributes = {
 					51086118229011FE0060C12F = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1140;
 					};
 					51086121229011FE0060C12F = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -500,7 +501,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.coinbase.wallet.CBCrypto.CBCrypto;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -526,7 +527,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.coinbase.wallet.CBCrypto.CBCrypto;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
