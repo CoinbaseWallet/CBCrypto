@@ -19,7 +19,7 @@ DEPENDENCIES:
   - SwiftLint
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - BigInt
     - CryptoSwift
     - RxAtomic
@@ -50,4 +50,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 66cd61ca9b95503eaa633579cfadd3d6747b3821
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.6.2
